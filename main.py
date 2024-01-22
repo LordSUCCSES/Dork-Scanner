@@ -1,5 +1,6 @@
 import argparse
 from googlesearch import search
+from fake_useragent import UserAgent
 
 class Color:
     RED = '\033[91m'
@@ -20,13 +21,15 @@ banner = Color.BLUE + r"""
 def google_arama(file_path, ulke_kodu, site_sayisi):
     print(banner)
     try:
+        ua = UserAgent()
+        headers = {'User-Agent': ua.random}
 
         with open(file_path, 'r') as file:
             dorks = [line.strip() for line in file]
 
         for dork in dorks:
             dork_sorgu = f"inurl:{dork} site:{ulke_kodu}"
-            sonuclar = search(dork_sorgu, num_results=site_sayisi)
+            sonuclar = search(dork_sorgu, num_results=site_sayisi, user_agent=headers['User-Agent'])
 
             index = 0
             for sonuc in sonuclar:
