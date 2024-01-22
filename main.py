@@ -1,6 +1,7 @@
 import argparse
 from googlesearch import search
-from fake_useragent import UserAgent
+import random
+import time
 
 class Color:
     RED = '\033[91m'
@@ -21,12 +22,9 @@ banner = Color.BLUE + r"""
 def google_arama(dorks, ulke_kodu, site_sayisi):
     print(banner)
     try:
-        ua = UserAgent()
-        headers = {'User-Agent': ua.random}
-
         for dork in dorks:
             dork_sorgu = f"inurl:{dork} site:{ulke_kodu}"
-            sonuclar = search(dork_sorgu, user_agent=headers['User-Agent'])
+            sonuclar = search(dork_sorgu, stop=site_sayisi, pause=2)
 
             for index, sonuc in enumerate(sonuclar, 1):
                 print(f"{index}: {sonuc}")
