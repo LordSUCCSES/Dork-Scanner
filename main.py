@@ -18,11 +18,14 @@ banner = Color.BLUE + r"""
 \____/ \___/ \____/ \____/\____/\____/\____/ 
 """ + Color.END
 
-def google_arama(dorks, ulke_kodu, site_sayisi):
+def google_arama(file_path, ulke_kodu, site_sayisi):
     print(banner)
     try:
         ua = UserAgent()
         headers = {'User-Agent': ua.random}
+
+        with open(file_path, 'r') as file:
+            dorks = [line.strip() for line in file]
 
         for dork in dorks:
             dork_sorgu = f"inurl:{dork} site:{ulke_kodu}"
@@ -41,22 +44,12 @@ def google_arama(dorks, ulke_kodu, site_sayisi):
 
 def main():
     parser = argparse.ArgumentParser(description="Google araması yapma scripti.")
-    parser.add_argument("-d", "--dork", help="Aramak istediğiniz dork ifadesi (Ör: index.php?id=)")
-    parser.add_argument("-f", "--file", help="Dork'ları içeren metin dosyasının yolu (her satıra bir tane)")
+    parser.add_argument("-f", "--file", required=True, help="Dork'ları içeren metin dosyasının yolu (her satıra bir tane)")
     parser.add_argument("-u", "--ulke", required=True, help="Ülke kodu (Ör: us, za)")
     parser.add_argument("-s", "--site", type=int, required=True, help="Kaç tane site sıralaması istediğiniz (Ör: 12)")
     args = parser.parse_args()
 
-    if args.file:
-        with open(args.file, 'r') as file:
-            dorks = [line.strip() for line in file]
-    elif args.dork:
-        dorks = [args.dork]
-    else:
-        print("-d veya -f seçeneği gereklidir.")
-        return
-
-    google_arama(dorks, args.ulke, args.site)
+    google_arama(args.file, args.ulke, args.site)
 
 if __name__ == "__main__":
     main()
