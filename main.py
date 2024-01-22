@@ -26,9 +26,11 @@ def google_arama(dorks, ulke_kodu, site_sayisi):
 
         for dork in dorks:
             dork_sorgu = f"inurl:{dork} site:{ulke_kodu}"
-            sonuclar = search(dork_sorgu, num=site_sayisi, user_agent=headers['User-Agent'])
+            sonuclar = search(dork_sorgu, stop=site_sayisi, user_agent=headers['User-Agent'])
 
-            for index, sonuc in enumerate(sonuclar, 1):
+            index = 0
+            for sonuc in sonuclar:
+                index += 1
                 print(f"{index}: {sonuc}")
                 with open("sonuclar.txt", "a") as dosya:
                     dosya.write(sonuc + "\n")
@@ -40,7 +42,7 @@ def google_arama(dorks, ulke_kodu, site_sayisi):
 def main():
     parser = argparse.ArgumentParser(description="Google araması yapma scripti.")
     parser.add_argument("-d", "--dork", help="Aramak istediğiniz dork ifadesi (Ör: index.php?id=)")
-    parser.add_argument("-f", "--file", help="Dorks içeren metin dosyasının yolu (her satıra bir tane)")
+    parser.add_argument("-f", "--file", help="Dork'ları içeren metin dosyasının yolu (her satıra bir tane)")
     parser.add_argument("-u", "--ulke", required=True, help="Ülke kodu (Ör: us, za)")
     parser.add_argument("-s", "--site", type=int, required=True, help="Kaç tane site sıralaması istediğiniz (Ör: 12)")
     args = parser.parse_args()
