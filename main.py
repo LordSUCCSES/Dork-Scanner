@@ -26,7 +26,7 @@ def google_arama(dorks, ulke_kodu, site_sayisi):
 
         for dork in dorks:
             dork_sorgu = f"inurl:{dork} site:{ulke_kodu}"
-            sonuclar = search(dork_sorgu, stop=site_sayisi, user_agent=headers['User-Agent'])
+            sonuclar = search(dork_sorgu, num=site_sayisi, user_agent=headers['User-Agent'])
 
             index = 0
             for sonuc in sonuclar:
