@@ -53,7 +53,7 @@ def main():
     elif args.dork:
         dorks = [args.dork]
     else:
-        print("Either -d or -f option is required.")
+        print("-d veya -f seçeneği gereklidir.")
         return
 
     google_arama(dorks, args.ulke, args.site)
