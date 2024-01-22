@@ -1,0 +1,2 @@
+index.php=id=
+details.php
